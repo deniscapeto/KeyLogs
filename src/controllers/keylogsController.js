@@ -3,9 +3,9 @@ import mysql from 'mysql';
 export function carregarTodos(req,res){
 
     var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "sa",
+        host: "keyloggerdbinstance.cnvf4sntgqxj.sa-east-1.rds.amazonaws.com",
+        user: "sa",
+        password: "sasasasa",
         database: "keyloggerdb"
       });
       
@@ -13,18 +13,13 @@ export function carregarTodos(req,res){
         if (err) 
             throw err;
 
-        var sql = 'select * from keylogs';
+        var sql = 'SELECT * FROM KeyLogs';
 
-        console.log("Conectado no mysql");
         con.query(sql, function (err, result) {
           if (err) 
             throw err;
 
-          //var resultado = result.filter(i => i.Id == 35);
-          //console.log("Result: " + resultado[0].Id);
-          //res.send(resultado);
           res.send(result);
-
         });
       });
 }
@@ -32,9 +27,9 @@ export function carregarTodos(req,res){
 export function carregarKeylog(req,res){
 
     var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "sa",
+        host: "keyloggerdbinstance.cnvf4sntgqxj.sa-east-1.rds.amazonaws.com",
+        user: "sa",
+        password: "sasasasa",
         database: "keyloggerdb"
       });
       
@@ -42,9 +37,8 @@ export function carregarKeylog(req,res){
         if (err) 
             throw err;
 
-        var sql = 'select * from keylogs';
+        var sql = 'select * from KeyLogs';
 
-        console.log("Conectado no mysql");
         con.query(sql, function (err, result) {
           if (err) 
             throw err;
@@ -63,22 +57,22 @@ export function carregarKeylog(req,res){
 export function inserirKeyLogs(req,res){
 
     var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "sa",
+        host: "keyloggerdbinstance.cnvf4sntgqxj.sa-east-1.rds.amazonaws.com",
+        user: "sa",
+        password: "sasasasa",
         database: "keyloggerdb"
       });
-
 
       con.connect(function(err) {
         if (err) 
             throw err;
             
-        console.log("body: " + req.body);
+        console.log("body: " + req.body.json);
+        console.log("body: " + req.body.usuario);
             
-        var sql = `INSERT INTO KeyLogs(json) values ('${ req.body.json }')`;
+        var sql = `INSERT INTO KeyLogs(json,usuario) 
+        values ('${ req.body.json }','${ req.body.usuario }')`;
         
-        console.log("Conectado no mysql");
         con.query(sql, function (err, result) {
             if (err) 
                 throw err;
