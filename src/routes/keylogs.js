@@ -1,4 +1,4 @@
-import {carregarTodos, inserirKeyLogs, carregarKeylog} from '../controllers/keylogsController';
+import {carregarTodos, inserirKeyLogs, carregarKeylog, atualizarKeylog} from '../controllers/keylogsController';
 
 
 function configurarRotas(app)
@@ -8,7 +8,8 @@ function configurarRotas(app)
         .post(inserirKeyLogs);
 
     app.route('/keylogs/:Id')    
-        .get(carregarKeylog);
+        .get(carregarKeylog)
+        .put(atualizarKeylog);
 };
 
 export default configurarRotas;
