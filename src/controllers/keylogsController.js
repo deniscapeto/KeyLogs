@@ -1,60 +1,33 @@
-import mysql from 'mysql';
+import KeylogDao from '../dao/keylogDao';
 
 export function carregarTodos(req,res){
 
-  var sql = 'SELECT * FROM KeyLogs';
-  req.connection.query(sql, function (err, result) {
-    if (err) 
-      throw err;
-
-    res.send(result);
-  });
-
+    new KeylogDao(req.connection).list()
+    .then(keylogs => res.send(keylogs))
+    .catch(e => res.status(500).send(e));
 }
 
 export function carregarKeylog(req,res){
 
-  var sql = 'SELECT * FROM KeyLogs';
-  req.connection.query(sql, function (err, result) {
-    if (err) 
-      throw err;
-
-    var resultado = result.filter(i => i.Id == req.params.Id);
-    console.log("Result: " + resultado[0]);
-    res.send(resultado);     
-
-  });
+  new KeylogDao(req.connection).selectById(req.params.Id)
+  .then(keylogs => res.send(keylogs))
+  .catch(e => res.status(500).send(e));
 }
 
 export function inserirKeyLogs(req,res){
-            
-  console.log("body: " + req.body.json);
-  console.log("body: " + req.body.usuario);
-      
-  var sql = `INSERT INTO KeyLogs(json,usuario) 
-  values ('${ req.body.json }','${ req.body.usuario }')`;
-  
-  req.connection.query(sql, function (err, result) {
-      if (err) 
-          throw err;
-      if(result.affectedRows >= 1)
-          res.send('Incluído');
-  });
 
+  var keylog = { json: req.body.json, usuario: req.body.usuario };
+
+  new KeylogDao(req.connection).insere(keylog)
+  .then(resolve => res.send(resolve))
+  .catch(e => res.status(500).send(e));
 }
 
 export function atualizarKeylog(req,res){
-
-  console.log("body: " + req.body.json);
-  console.log("body: " + req.body.usuario);
       
-  var sql = `UPDATE KeyLogs SET JSON = '${ JSON.stringify(req.body.json) }' WHERE id = ${ req.params.Id }`;
-  
-  req.connection.query(sql, function (err, result) {
-      if (err) 
-          throw err;
-      if(result.affectedRows >= 1)
-          res.send('Atualizado');
-  });
+  var keylog = { json: req.body.json, usuario: req.body.usuario, Id: req.params.Id };
 
+  new KeylogDao(req.connection).atualiza(keylog)
+  .then(resolve => res.send(resolve))
+  .catch(e => res.status(500).send(e));
 }
