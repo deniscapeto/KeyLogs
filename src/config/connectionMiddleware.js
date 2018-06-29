@@ -1,6 +1,4 @@
 
-import {pool} from './connectionPoolFactory';
-
 export default pool => (req,res,next) => {
 
     pool.getConnection((err, connection) => {

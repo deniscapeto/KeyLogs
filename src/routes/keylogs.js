@@ -1,6 +1,5 @@
 import {carregarTodos, inserirKeyLogs, carregarKeylog, atualizarKeylog} from '../controllers/keylogsController';
 
-
 function configurarRotas(app)
 {
     app.route('/keylogs')
