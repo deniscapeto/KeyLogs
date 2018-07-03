@@ -13,8 +13,8 @@ export default function configurarRotaLogin(app)
           });
           res.status(200).send({ auth: true, token: token });
         }
-        
-        res.status(500).send('Login inválido!');
+        else      
+          res.status(500).send('Login inválido!');
       });
 
       
