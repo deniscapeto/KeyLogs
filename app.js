@@ -7,6 +7,7 @@ import verifyJWT from './src/config/authenticationMiddleware';
 import pool from './src/config/connectionPoolFactory';
 import dotenv from 'dotenv-safe'; /*Para ler as variaveis de ambiente*/
 
+/*carregar as caviaveis de ambiente*/ 
 dotenv.load();
 
 var app = express();
