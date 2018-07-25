@@ -1,7 +1,7 @@
 export default class KeylogDao{
 
-    constructor(connection){
-        this._connection = connection;
+    constructor(private _connection){
+
     }
 
     list(){
