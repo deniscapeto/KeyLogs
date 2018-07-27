@@ -1,33 +1,39 @@
 import KeylogDao from '../dao/keylogDao';
+import express from 'express';
+import KeyLog from '../model/keylog';
 
-export function carregarTodos(req,res){
+export function carregarTodos(req: express.Request, res: express.Response){
 
-    new KeylogDao(req.connection).list()
+    new KeylogDao(req.conexao).list()
     .then(keylogs => res.send(keylogs))
     .catch(e => res.status(500).send(e));
 }
 
-export function carregarKeylog(req,res){
+export function carregarKeylog(req: express.Request, res: express.Response){
 
-  new KeylogDao(req.connection).selectById(req.params.Id)
+  new KeylogDao(req.conexao).selectById(req.params.Id)
   .then(keylogs => res.send(keylogs))
   .catch(e => res.status(500).send(e));
 }
 
-export function inserirKeyLogs(req,res){
+export function inserirKeyLogs(req: express.Request, res: express.Response): void {
 
-  var keylog = { json: req.body.json, usuario: req.body.usuario };
+  //var keylog = { json: req.body.json, usuario: req.body.usuario };
 
-  new KeylogDao(req.connection).insere(keylog)
+  let keylog = new KeyLog(null, req.body.usuario,   req.body.json)
+
+  new KeylogDao(req.conexao).insere(keylog)
   .then(resolve => res.send(resolve))
   .catch(e => res.status(500).send(e));
 }
 
-export function atualizarKeylog(req,res){
+export function atualizarKeylog(req: express.Request, res: express.Response){
       
-  var keylog = { json: req.body.json, usuario: req.body.usuario, Id: req.params.Id };
+  //var keylog = { json: req.body.json, usuario: req.body.usuario, Id: req.params.Id };
 
-  new KeylogDao(req.connection).atualiza(keylog)
+  let keylog = new KeyLog(req.params.Id, req.body.usuario,   req.body.json)
+
+  new KeylogDao(req.conexao).atualiza(keylog)
   .then(resolve => res.send(resolve))
   .catch(e => res.status(500).send(e));
 }

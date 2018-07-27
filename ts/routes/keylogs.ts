@@ -1,6 +1,7 @@
 import {carregarTodos, inserirKeyLogs, carregarKeylog, atualizarKeylog} from '../controllers/keylogsController';
+import express from 'express';
 
-function configurarRotas(app)
+function configurarRotas(app: express.Express)
 {
     app.route('/keylogs')
         .get(carregarTodos)

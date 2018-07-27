@@ -4,9 +4,14 @@
         "outDir": "src",
         "allowJs": true,
         "noEmitOnError": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "allowSyntheticDefaultImports": true /*para permitir: import dotenv from 'dotenv-safe';*/
     },
     "include": [
         "ts/**/*"
+    ],
+    "files": [
+        "ts/typings/custom.d.ts"
     ]
 }
